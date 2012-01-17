@@ -9,17 +9,18 @@ public class DaoHelper extends SQLiteOpenHelper
 	private static final String DATABASE_NAME = "CARLOG";
 	private static final int DATABASE_VERSION = 2;
 	
-	private static final String CAR_LIST_TABLE = "car_list";
+	public static final String CAR_LIST_TABLE = "car_list";
 	
 	//field list
-	private static final String CAR_NAME = "car_name"; 
-	private static final String CAR_YEAR = "car_year";
+	public static final String CAR_NAME = "car_name"; 
+	public static final String CAR_YEAR = "car_year";
+	public static final String CAR_ID = "car_id";
 	
 	private static final String CAR_LIST_TABLE_CREATE =
              "CREATE TABLE " + CAR_LIST_TABLE + " (" +
+            		 CAR_ID + " integer primary key," +
             		 CAR_NAME + " TEXT, " +
             		 CAR_YEAR + " TEXT);";
-
 	
 	public DaoHelper(Context context)
 	{

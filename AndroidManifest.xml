@@ -19,6 +19,11 @@
             </intent-filter>
         </activity>
         <activity android:label="ManageVehicles" android:name=".ManageVehiclesActivity"></activity>
+	<provider
+		android:name=".ContentProvider.CarListContentProvider"
+ 		android:authorities="org.jay.CarLog.ContentProvider" >
+    </provider>    
+    
     </application>
 
 </manifest>
