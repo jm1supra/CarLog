@@ -46,7 +46,7 @@ public class CarListDao
 	
 	public Cursor getAll()
 	{
-		return database.query(TABLE_NAME, new String[]{CAR_ID, CAR_YEAR, CAR_NAME}, null, null, null, null, null);
+		return database.query(TABLE_NAME, new String[]{"rowid _id", CAR_ID, CAR_YEAR, CAR_NAME}, null, null, null, null, null);
 	}
 
 }
