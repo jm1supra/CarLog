@@ -37,7 +37,6 @@ public class CarListDao
 	{
 		ContentValues values = new ContentValues();
 		
-		values.put(CAR_ID, 0);
 		values.put(CAR_YEAR, vehicle.getYear());
 		values.put(CAR_NAME, vehicle.getModel());
 		
