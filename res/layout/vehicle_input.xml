@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/model"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <requestFocus />
+    </EditText>
+
+    <Spinner
+        android:id="@+id/year_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="117dp"
+        android:layout_height="wrap_content"
+        android:text="Submit" />
+    
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="117dp"
+        android:layout_height="wrap_content"
+        android:text="Cancel" />
+    
+    
+</LinearLayout>

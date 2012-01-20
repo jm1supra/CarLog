@@ -1,5 +1,8 @@
 package org.jay.CarLog;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+
 import org.jay.CarLog.ContentProvider.CarListContentProvider;
 import org.jay.CarLog.Dao.CarListDao;
 import org.jay.CarLog.helper.DaoHelper;
@@ -7,6 +10,7 @@ import org.jay.CarLog.model.Vehicle;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -19,14 +23,18 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 
 public class ManageVehiclesActivity extends ListActivity
 {
-	private EditText vehicleName;
 	private CarListDao carListDao;
 	private final static String TAG = "ManageVehiclesActivity"; 
 	private SimpleCursorAdapter adapter;
+	private TextView modelName;
+	private Spinner yearList;
+	private Dialog dialog;
 	
 	/** Called when the activity is first created. */
     @Override
@@ -35,25 +43,75 @@ public class ManageVehiclesActivity extends ListActivity
     	 super.onCreate(savedInstanceState);
          setContentView(R.layout.manage_vehicles);
          
-         Button next = (Button)findViewById(R.id.button1);
-         vehicleName = (EditText)findViewById(R.id.editText1);
+         Button next = (Button)findViewById(R.id.btn_launchVehicleAddDialog);
          
          carListDao = new CarListDao(this);
          carListDao.open();
          
          this.fillData();
+         
+         //create dialog to input the car information.
+         dialog = new Dialog(this);
+         dialog.setTitle("Add Information");
+         dialog.setContentView(R.layout.vehicle_input);
+         
+         modelName = (TextView)dialog.findViewById(R.id.name_entry);
+         yearList = (Spinner)dialog.findViewById(R.id.year_list);
+         
+         //load data for the years.
+         ArrayList<String> list = new ArrayList<String>();
+         
+         int i = 1950;
+         int year = Calendar.getInstance().get(Calendar.YEAR);
+         
+         while(i < year)
+         {
+        	 list.add(i+"");
+        	 i++;
+         }
+         
+         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+ 				R.layout.vehicle_input, R.id.year_list, list);
+         
+         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+         yearList.setAdapter(adapter);
 
+         Button submitButton = (Button)dialog.findViewById(R.id.submit);
+         Button cancelButton = (Button)dialog.findViewById(R.id.cancel);
+         
+         submitButton.setOnClickListener(new View.OnClickListener() 
+         {
+			public void onClick(View v) 
+			{
+				addNewVehicle(modelName.getText().toString(), yearList.getSelectedItem().toString());
+				fillData();
+				
+				//hide the dialog box
+				dialog.dismiss();
+			}
+		 });
+         
+         cancelButton.setOnClickListener(new View.OnClickListener() 
+         {
+			public void onClick(View v) 
+			{
+				modelName.setText("");
+				dialog.dismiss();
+			}
+		});
+         
          next.setOnClickListener(new View.OnClickListener() 
          {
              public void onClick(View view) 
              {
-            	 //add the vehicle
-            	 //fill data again.
-            	 addNewVehicle(vehicleName.getText().toString(), "2000");
-            	 fillData();
+            	 //clear the data selected from previous session
+            	 if(modelName.getText() != "")
+            		 modelName.setText("");
+            	 
+            	 //display the dialog box.
+            	 dialog.show();
              }
          });
-
     }
     
     public void fillData()
