@@ -49,36 +49,36 @@ public class ManageVehiclesActivity extends ListActivity
          carListDao.open();
          
          this.fillData();
-         
+         Log.i(TAG, "1");
          //create dialog to input the car information.
          dialog = new Dialog(this);
          dialog.setTitle("Add Information");
          dialog.setContentView(R.layout.vehicle_input);
-         
-         modelName = (TextView)dialog.findViewById(R.id.name_entry);
+         Log.i(TAG, "2");
+         modelName = (TextView)dialog.findViewById(R.id.model);
          yearList = (Spinner)dialog.findViewById(R.id.year_list);
-         
+         Log.i(TAG, "3");
          //load data for the years.
-         ArrayList<String> list = new ArrayList<String>();
+         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
          
          int i = 1950;
          int year = Calendar.getInstance().get(Calendar.YEAR);
          
+         Log.i(TAG, "4");
+         
          while(i < year)
          {
-        	 list.add(i+"");
+        	 adapter.add(i+"");
         	 i++;
          }
          
-         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
- 				R.layout.vehicle_input, R.id.year_list, list);
-         
+         Log.i(TAG, "5");
          adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
          yearList.setAdapter(adapter);
-
+         Log.i(TAG, "6");
          Button submitButton = (Button)dialog.findViewById(R.id.submit);
          Button cancelButton = (Button)dialog.findViewById(R.id.cancel);
-         
+         Log.i(TAG, "7");
          submitButton.setOnClickListener(new View.OnClickListener() 
          {
 			public void onClick(View v) 
@@ -90,7 +90,7 @@ public class ManageVehiclesActivity extends ListActivity
 				dialog.dismiss();
 			}
 		 });
-         
+         Log.i(TAG, "8");
          cancelButton.setOnClickListener(new View.OnClickListener() 
          {
 			public void onClick(View v) 
@@ -99,7 +99,7 @@ public class ManageVehiclesActivity extends ListActivity
 				dialog.dismiss();
 			}
 		});
-         
+         Log.i(TAG, "9");
          next.setOnClickListener(new View.OnClickListener() 
          {
              public void onClick(View view) 
@@ -112,6 +112,7 @@ public class ManageVehiclesActivity extends ListActivity
             	 dialog.show();
              }
          });
+         Log.i(TAG, "10");
     }
     
     public void fillData()
