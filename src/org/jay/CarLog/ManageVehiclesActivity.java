@@ -36,19 +36,19 @@ public class ManageVehiclesActivity extends ListActivity
 	private Dialog dialog;
 	private ActionBar actionBar;
 	
-	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) 
 	{
 	    MenuInflater inflater = getMenuInflater();
 	    inflater.inflate(R.menu.mange_select_vehicles, menu);
-	    return true;
+	    return super.onCreateOptionsMenu(menu);
+	    	
 	}
 	
 	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) 
-    {
+    {	
     	 super.onCreate(savedInstanceState);
          setContentView(R.layout.manage_vehicles);
          
@@ -82,6 +82,9 @@ public class ManageVehiclesActivity extends ListActivity
          yearList.setAdapter(adapter);
          
          actionBar = this.getActionBar();
+         
+         if(actionBar == null)
+        	 Log.d(TAG, "actionbar is null");
          
          Button submitButton = (Button)dialog.findViewById(R.id.submit);
          Button cancelButton = (Button)dialog.findViewById(R.id.cancel);
@@ -145,7 +148,6 @@ public class ManageVehiclesActivity extends ListActivity
 		adapter = new MySimpleCursorAdapter(this, R.layout.manage_vehicles_entry, c, from, to, 0);
 		adapter.setActionbar(actionBar);
 	
-		
 		setListAdapter(adapter);
 		
     }

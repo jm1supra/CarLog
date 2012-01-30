@@ -3,6 +3,7 @@ package org.jay.CarLog.Adapter;
 import android.app.ActionBar;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.SimpleCursorAdapter;
 public class MySimpleCursorAdapter extends SimpleCursorAdapter
 {
 	private ActionBar actionbar;
+	private final static String TAG = "MySimpleCursorAdapter";
 	
 	public MySimpleCursorAdapter(Context context, int layout, Cursor c,
 			String[] from, int[] to, int flags) {
@@ -27,9 +29,12 @@ public class MySimpleCursorAdapter extends SimpleCursorAdapter
         {
             public void onClick(View v) 
             {
+            	Log.v(TAG, "clickevent on the listview checkbox");
+            	
             	actionbar.show();
             }
          });
+        
          return v;
     }
 
@@ -38,6 +43,7 @@ public class MySimpleCursorAdapter extends SimpleCursorAdapter
 	}
 
 	public void setActionbar(ActionBar actionbar) {
+		Log.v(TAG, "action bar setting");
 		this.actionbar = actionbar;
 	}
 }
