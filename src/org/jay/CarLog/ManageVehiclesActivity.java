@@ -7,6 +7,7 @@ import org.jay.CarLog.Dao.CarListDao;
 import org.jay.CarLog.model.Vehicle;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.database.Cursor;
@@ -42,7 +43,6 @@ public class ManageVehiclesActivity extends ListActivity
 	    MenuInflater inflater = getMenuInflater();
 	    inflater.inflate(R.menu.mange_select_vehicles, menu);
 	    return super.onCreateOptionsMenu(menu);
-	    	
 	}
 	
 	/** Called when the activity is first created. */
@@ -147,7 +147,7 @@ public class ManageVehiclesActivity extends ListActivity
 		// elements in a ListView
 		adapter = new MySimpleCursorAdapter(this, R.layout.manage_vehicles_entry, c, from, to, 0);
 		adapter.setActionbar(actionBar);
-	
+		adapter.setActivity(this);
 		setListAdapter(adapter);
 		
     }
