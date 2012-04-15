@@ -1,16 +1,11 @@
 package org.jay.CarLog;
 
-import org.jay.CarLog.ContentProvider.CarListContentProvider;
-import org.jay.CarLog.helper.DaoHelper;
-
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+
 
 public class CarLogActivity extends Activity 
 {
@@ -27,6 +22,16 @@ public class CarLogActivity extends Activity
             public void onClick(View view) 
             {
                 Intent myIntent = new Intent(view.getContext(), ManageVehiclesActivity.class);
+                startActivityForResult(myIntent, 10);
+            }
+        });
+        
+        Button next3 = (Button)findViewById(R.id.button3);
+        next3.setOnClickListener(new View.OnClickListener() 
+        {
+            public void onClick(View view) 
+            {
+                Intent myIntent = new Intent(view.getContext(), ListTestActivity.class);
                 startActivityForResult(myIntent, 10);
             }
         });

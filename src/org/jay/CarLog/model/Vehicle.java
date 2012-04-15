@@ -6,6 +6,16 @@ public class Vehicle {
 	private String year;
 	private int id;
 	
+	public Vehicle(){};
+	
+	
+	public Vehicle(int id, String model, String year)
+	{
+		this.id = id;
+		this.model = model;
+		this.year = year;
+	}
+	
 	public String getModel() {
 		return model;
 	}

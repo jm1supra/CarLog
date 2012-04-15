@@ -1,5 +1,7 @@
 package org.jay.CarLog.Dao;
 
+import java.util.ArrayList;
+
 import org.jay.CarLog.helper.DaoHelper;
 import org.jay.CarLog.model.Vehicle;
 
@@ -46,6 +48,20 @@ public class CarListDao
 	public Cursor getAll()
 	{
 		return database.query(TABLE_NAME, new String[]{"rowid _id", CAR_ID, CAR_YEAR, CAR_NAME}, null, null, null, null, null);
+	}
+	
+	public ArrayList<Vehicle> getAllList()
+	{
+		ArrayList<Vehicle> mArrayList = new ArrayList<Vehicle>();
+		Cursor mCursor=this.getAll();
+		
+		for(mCursor.moveToFirst(); mCursor.moveToNext(); mCursor.isAfterLast()) 
+		{
+		    // The Cursor is now set to the right position
+		    mArrayList.add(new Vehicle(mCursor.getInt(0), mCursor.getString(1), mCursor.getString(2)));
+		}
+
+		return mArrayList;
 	}
 
 }

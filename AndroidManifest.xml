@@ -14,11 +14,11 @@
             android:name=".CarLogActivity" >
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
-		
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:label="ManageVehicles" android:name=".ManageVehiclesActivity"></activity>
+        <activity android:label="ManageVehicles" android:name=".ManageVehiclesActivity" android:theme="@android:style/Theme.Holo"></activity>
+        <activity android:label="ListTest" android:name=".ListTestActivity"></activity>
 	<provider
 		android:name=".ContentProvider.CarListContentProvider"
  		android:authorities="org.jay.CarLog.ContentProvider" >

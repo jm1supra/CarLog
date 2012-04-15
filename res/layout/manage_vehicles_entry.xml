@@ -3,10 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
-	<CheckBox
-        android:id="@+id/vehicle_entry_checkbox"
+
+    <CheckBox
+        android:id="@+id/vehicle_entry"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    
+        android:layout_height="wrap_content"
+        android:text="CheckBox" />
+	
 </LinearLayout>

@@ -1,5 +1,9 @@
 package org.jay.CarLog.Adapter;
 
+import org.jay.CarLog.ManageVehiclesActivity;
+import org.jay.CarLog.R;
+import org.jay.CarLog.Dao.CarListDao;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
@@ -9,51 +13,45 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 public class MySimpleCursorAdapter extends SimpleCursorAdapter
 {
-	private ActionBar actionbar;
-	private final static String TAG = "MySimpleCursorAdapter";
-	private Activity activity;
+	private final static String TAG = "MySimpleCursorAdapter";	
+	private CheckBox cb;
+	private Context ct;
 	
-	public MySimpleCursorAdapter(Context context, int layout, Cursor c,
-			String[] from, int[] to, int flags) {
-		super(context, layout, c, from, to, flags);
-		// TODO Auto-generated constructor stub
-	}
-
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent) 
+	public MySimpleCursorAdapter(Context context, int layout, Cursor c, String[] from, int[] to, int flags) 
 	{
-        View v = super.getView(position, convertView, parent);
-        v.setOnClickListener(new OnClickListener() 
-        {
-            public void onClick(View v) 
-            {
-            	Log.v(TAG, "clickevent on the listview checkbox");
-            	
-            	activity.openOptionsMenu();
-            }
-         });
-        
-         return v;
-    }
-
-	public ActionBar getActionbar() {
-		return actionbar;
+		super(context, layout, c, from, to, flags);
+		
+		this.ct = context;
 	}
 
-	public void setActionbar(ActionBar actionbar) {
-		Log.v(TAG, "action bar setting");
-		this.actionbar = actionbar;
-	}
+	@Override   
+	public void bindView(View view, Context context, Cursor cursor) 
+	{
+		cb = (CheckBox)view.findViewById(R.id.vehicle_entry);
+		cb.setText(cursor.getString(cursor.getColumnIndex(CarListDao.CAR_NAME)));
 
-	public Activity getActivity() {
-		return activity;
-	}
-
-	public void setActivity(Activity activity) {
-		this.activity = activity;
+	    cb.setChecked(false);
+	    
+	    cb.setOnCheckedChangeListener(new OnCheckedChangeListener() 
+	    {
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) 
+			{
+				if(isChecked)
+				{
+					//Toast.makeText(ct, "isChecked: "+buttonView.getText().toString(), Toast.LENGTH_LONG).show();
+					
+					((ManageVehiclesActivity)ct).openOptionsMenu();
+				}
+			}           
+	    });
+	    
 	}
 }
