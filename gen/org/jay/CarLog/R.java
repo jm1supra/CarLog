@@ -24,9 +24,10 @@ public final class R {
         public static final int checkBox1=0x7f060008;
         public static final int imageView1=0x7f060002;
         public static final int label=0x7f060000;
-        public static final int menu_delete=0x7f06000f;
-        public static final int menu_test=0x7f06000d;
-        public static final int menu_test2=0x7f06000e;
+        public static final int menu_delete=0x7f060010;
+        public static final int menu_search=0x7f06000d;
+        public static final int menu_test=0x7f06000e;
+        public static final int menu_test2=0x7f06000f;
         public static final int model=0x7f060009;
         public static final int submit=0x7f06000b;
         public static final int vehicle_entry=0x7f060007;
@@ -48,6 +49,7 @@ public final class R {
     public static final class string {
         public static final int app_name=0x7f040001;
         public static final int hello=0x7f040000;
+        public static final int menu_search=0x7f040004;
         public static final int new_car_button=0x7f040002;
         public static final int view_log_button=0x7f040003;
     }
