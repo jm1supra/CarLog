@@ -1,5 +1,8 @@
 package org.jay.CarLog.Adapter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.jay.CarLog.ManageVehiclesActivity;
 import org.jay.CarLog.R;
 import org.jay.CarLog.Dao.CarListDao;
@@ -25,9 +28,11 @@ import android.widget.Toast;
 
 public class MySimpleCursorAdapter extends SimpleCursorAdapter
 {
+	private HashMap<String, Integer> checkedItems = new HashMap<String, Integer>();
 	private final static String TAG = "MySimpleCursorAdapter";	
 	private CheckBox cb;
 	private Context ct;
+	private boolean flag = false;
 	
 	public MySimpleCursorAdapter(Context context, int layout, Cursor c, String[] from, int[] to, int flags) 
 	{
@@ -50,12 +55,21 @@ public class MySimpleCursorAdapter extends SimpleCursorAdapter
 			{
 				if(isChecked)
 				{
+					checkedItems.put(buttonView.getText().toString(), 1);
+				}
+				else
+				{
+					checkedItems.remove(buttonView.getText().toString());
+				}
+				
+				if(!flag)
+				{
+					flag = true;
 					//Toast.makeText(ct, "isChecked: "+buttonView.getText().toString(), Toast.LENGTH_LONG).show();
 					
 					//// Start the CAB using the ActionMode.Callback defined above
 					/**
-					mActionMode = OverviewActivity.this
-.startActionMode(mActionModeCallback);
+					mActionMode = OverviewActivity.this.startActionMode(mActionModeCallback);
 					view.setSelected(true);
 					*/
 					((ManageVehiclesActivity)ct).startActionMode(mActionModeCallback);
@@ -67,22 +81,18 @@ public class MySimpleCursorAdapter extends SimpleCursorAdapter
 	
 	private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() 
 	{
-		private boolean flag = false;
 		// Called when the action mode is created; startActionMode() was called
 		public boolean onCreateActionMode(ActionMode mode, Menu menu) 
 		{
-			if(!flag)
+			if(flag)
 			{
 				// Inflate a menu resource providing context menu items
 				MenuInflater inflater = mode.getMenuInflater();
 				// Assumes that you have "contexual.xml" menu resources
 				inflater.inflate(R.menu.mange_select_vehicles, menu);
-				flag = true;
-				return true;
 			}
 			
 			return true;
-			
 		}
 
 		// Called each time the action mode is shown. Always called after
@@ -99,10 +109,19 @@ public class MySimpleCursorAdapter extends SimpleCursorAdapter
 		{
 			switch (item.getItemId()) 
 			{
-			default:
-				Toast.makeText(((ManageVehiclesActivity)ct), "Selected menu", Toast.LENGTH_LONG).show();
+			case R.id.menu_delete:
+				String list = "list: ";
+				//get all the items selected...
+				for(Map.Entry<String, Integer> entry: checkedItems.entrySet())
+				{
+					list += entry.getKey() + " ";
+				}
+				
+				Toast.makeText(((ManageVehiclesActivity)ct), list, Toast.LENGTH_LONG).show();
 				mode.finish(); // Action picked, so close the CAB
-				return false;
+				return true;
+			default:
+				return true;
 			}
 		}
 

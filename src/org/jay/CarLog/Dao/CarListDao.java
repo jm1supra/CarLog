@@ -22,6 +22,8 @@ public class CarListDao
 	private SQLiteDatabase database;
 	private DaoHelper dbHelper;
 	
+	
+	
 	public CarListDao(Context context)
 	{
 		this.context = context;
