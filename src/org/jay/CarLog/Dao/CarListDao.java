@@ -22,8 +22,6 @@ public class CarListDao
 	private SQLiteDatabase database;
 	private DaoHelper dbHelper;
 	
-	
-	
 	public CarListDao(Context context)
 	{
 		this.context = context;
@@ -47,9 +45,24 @@ public class CarListDao
 		database.insert(TABLE_NAME, null, values);
 	}
 	
+	public void editCar(Vehicle vehicle)
+	{
+		ContentValues updateCountry = new ContentValues();
+		
+		updateCountry.put(CAR_YEAR, vehicle.getYear());
+		updateCountry.put(CAR_NAME, vehicle.getModel());
+		   
+		database.update(TABLE_NAME, updateCountry, CarListDao.CAR_NAME+"=?", new String[]{vehicle.getModel()});
+	}
+	
 	public Cursor getAll()
 	{
-		return database.query(TABLE_NAME, new String[]{"rowid _id", CAR_ID, CAR_YEAR, CAR_NAME}, null, null, null, null, null);
+		return database.query(TABLE_NAME, new String[]{"car_id _id", CAR_ID, CAR_YEAR, CAR_NAME}, null, null, null, null, null);
+	}
+	
+	public void remove(String name)
+	{
+		database.delete(TABLE_NAME, CAR_NAME + "=?", new String[]{name});
 	}
 	
 	public ArrayList<Vehicle> getAllList()

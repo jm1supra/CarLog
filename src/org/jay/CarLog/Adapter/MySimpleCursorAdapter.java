@@ -13,24 +13,28 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 import android.view.ActionMode;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.PopupMenu;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MySimpleCursorAdapter extends SimpleCursorAdapter
 {
 	private HashMap<String, Integer> checkedItems = new HashMap<String, Integer>();
 	private final static String TAG = "MySimpleCursorAdapter";	
-	private CheckBox cb;
+	private TextView tv;
 	private Context ct;
 	private boolean flag = false;
 	
@@ -44,11 +48,32 @@ public class MySimpleCursorAdapter extends SimpleCursorAdapter
 	@Override   
 	public void bindView(View view, Context context, Cursor cursor) 
 	{
-		cb = (CheckBox)view.findViewById(R.id.vehicle_entry);
-		cb.setText(cursor.getString(cursor.getColumnIndex(CarListDao.CAR_NAME)));
-
-	    cb.setChecked(false);
+		tv = (TextView)view.findViewById(R.id.vehicle_entry_name);
+		tv.setText(cursor.getString(cursor.getColumnIndex(CarListDao.CAR_NAME)));
+		
+	    tv.setOnLongClickListener(new OnLongClickListener() 
+	    { 
+	        public boolean onLongClick(View v) 
+	        {
+	        	//display the long
+	        	
+	        	
+	            // TODO Auto-generated method stub
+	            return true;
+	        }
+	    });
 	    
+	    
+	    tv.setOnLongClickListener(new OnLongClickListener()
+	    {
+			public boolean onLongClick(View v) 
+			{
+				// TODO Auto-generated method stub
+				return false;
+			}});
+	    
+	    
+	    /**
 	    cb.setOnCheckedChangeListener(new OnCheckedChangeListener() 
 	    {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) 
@@ -62,19 +87,10 @@ public class MySimpleCursorAdapter extends SimpleCursorAdapter
 					checkedItems.remove(buttonView.getText().toString());
 				}
 				
-				if(!flag)
-				{
-					flag = true;
-					//Toast.makeText(ct, "isChecked: "+buttonView.getText().toString(), Toast.LENGTH_LONG).show();
-					
-					//// Start the CAB using the ActionMode.Callback defined above
-					/**
-					mActionMode = OverviewActivity.this.startActionMode(mActionModeCallback);
-					view.setSelected(true);
-					*/
-					((ManageVehiclesActivity)ct).startActionMode(mActionModeCallback);
-					//((ManageVehiclesActivity)ct).openOptionsMenu();
-				}
+				//view.setSelected(true);
+
+				((ManageVehiclesActivity)ct).startActionMode(mActionModeCallback);
+				((ManageVehiclesActivity)ct).openOptionsMenu();
 			}           
 	    });
 	}
@@ -84,25 +100,30 @@ public class MySimpleCursorAdapter extends SimpleCursorAdapter
 		// Called when the action mode is created; startActionMode() was called
 		public boolean onCreateActionMode(ActionMode mode, Menu menu) 
 		{
-			if(flag)
+			if(!flag)
 			{
 				// Inflate a menu resource providing context menu items
 				MenuInflater inflater = mode.getMenuInflater();
+				
 				// Assumes that you have "contexual.xml" menu resources
 				inflater.inflate(R.menu.mange_select_vehicles, menu);
+				flag = true;
+				return true;
 			}
 			
-			return true;
+			return false;
 		}
 
 		// Called each time the action mode is shown. Always called after
 		// onCreateActionMode, but
 		// may be called multiple times if the mode is invalidated.
+		
 		public boolean onPrepareActionMode(ActionMode mode, Menu menu) 
 		{
-			Toast.makeText(((ManageVehiclesActivity)ct), "onPrepareActionMode", Toast.LENGTH_LONG).show();
+			//Toast.makeText(((ManageVehiclesActivity)ct), "onPrepareActionMode", Toast.LENGTH_LONG).show();
 			return false; // Return false if nothing is done
 		}
+		
 
 		// Called when the user selects a contextual menu item
 		public boolean onActionItemClicked(ActionMode mode, MenuItem item) 
@@ -128,8 +149,10 @@ public class MySimpleCursorAdapter extends SimpleCursorAdapter
 		public void onDestroyActionMode(ActionMode mode) 
 		{
 			// TODO Auto-generated method stub
-			Toast.makeText(((ManageVehiclesActivity)ct), "onDestroy", Toast.LENGTH_LONG).show();
+			//Toast.makeText(((ManageVehiclesActivity)ct), "onDestroy", Toast.LENGTH_LONG).show();
 			flag = false;
-		}
+		}*/
+	    
 	};
+	
 }

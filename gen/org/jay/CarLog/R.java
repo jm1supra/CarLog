@@ -16,35 +16,46 @@ public final class R {
     }
     public static final class id {
         public static final int TextView01=0x7f060001;
-        public static final int btn_launchVehicleAddDialog=0x7f060006;
+        public static final int btn_launchVehicleAddDialog=0x7f060008;
         public static final int button1=0x7f060003;
         public static final int button2=0x7f060004;
-        public static final int button3=0x7f060005;
-        public static final int cancel=0x7f06000c;
-        public static final int checkBox1=0x7f060008;
+        public static final int cancel=0x7f060011;
+        public static final int car_list_spinner=0x7f060007;
+        public static final int checkBox1=0x7f06000d;
+        public static final int editText1=0x7f06000b;
+        public static final int editText2=0x7f06000c;
+        public static final int gridLayout1=0x7f060005;
         public static final int imageView1=0x7f060002;
         public static final int label=0x7f060000;
-        public static final int menu_delete=0x7f060010;
-        public static final int menu_search=0x7f06000d;
-        public static final int menu_test=0x7f06000e;
-        public static final int menu_test2=0x7f06000f;
-        public static final int model=0x7f060009;
-        public static final int submit=0x7f06000b;
-        public static final int vehicle_entry=0x7f060007;
-        public static final int year_list=0x7f06000a;
+        public static final int log_add=0x7f060015;
+        public static final int menu_delete=0x7f060017;
+        public static final int menu_edit=0x7f060016;
+        public static final int menu_search=0x7f060012;
+        public static final int menu_test=0x7f060013;
+        public static final int menu_test2=0x7f060014;
+        public static final int model=0x7f06000e;
+        public static final int spinner1=0x7f06000a;
+        public static final int submit=0x7f060010;
+        public static final int textView1=0x7f060006;
+        public static final int vehicle_entry_name=0x7f060009;
+        public static final int year_list=0x7f06000f;
     }
     public static final class layout {
         public static final int car_row=0x7f030000;
         public static final int main=0x7f030001;
-        public static final int manage_vehicles=0x7f030002;
-        public static final int manage_vehicles_entry=0x7f030003;
-        public static final int test_list=0x7f030004;
-        public static final int test_list_entry=0x7f030005;
-        public static final int vehicle_input=0x7f030006;
+        public static final int manage_log=0x7f030002;
+        public static final int manage_vehicles=0x7f030003;
+        public static final int manage_vehicles_entry=0x7f030004;
+        public static final int new_log=0x7f030005;
+        public static final int test=0x7f030006;
+        public static final int test_list=0x7f030007;
+        public static final int test_list_entry=0x7f030008;
+        public static final int vehicle_input=0x7f030009;
     }
     public static final class menu {
         public static final int action_bar=0x7f050000;
-        public static final int mange_select_vehicles=0x7f050001;
+        public static final int manage_log=0x7f050001;
+        public static final int mange_select_vehicles=0x7f050002;
     }
     public static final class string {
         public static final int app_name=0x7f040001;

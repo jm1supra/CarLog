@@ -10,25 +10,34 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ListActivity;
+import android.content.Context;
 import android.database.Cursor;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ActionMode;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 
+import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.CheckBox;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,24 +47,36 @@ public class ManageVehiclesActivity extends ListActivity
 {
 	private CarListDao carListDao;
 	private final static String TAG = "ManageVehiclesActivity"; 
-	private MySimpleCursorAdapter adapter;
+	//private MySimpleCursorAdapter adapter;
+	private SimpleCursorAdapter adapter;
 	private TextView modelName;
 	private Spinner yearList;
 	private Dialog dialog;
 	private ListView vehicleListView;
-	private int stage = 0;
+	private Cursor c;
 	
-	public void setStage(int stage)
+	@Override 
+	public void onCreateContextMenu(ContextMenu menu, View v,ContextMenuInfo menuInfo) 
 	{
-		this.stage = stage;
-	}
-	
+		super.onCreateContextMenu(menu, v, menuInfo);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.mange_select_vehicles, menu);
+	 }
+	 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) 
+	public boolean onContextItemSelected(MenuItem item) 
 	{
-	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.mange_select_vehicles, menu);
-	    return super.onCreateOptionsMenu(menu);
+		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+		 
+		switch (item.getItemId()) 
+		{
+			case R.id.menu_delete:
+				c.moveToPosition(info.position);
+				carListDao.remove(c.getString(c.getColumnIndex(CarListDao.CAR_NAME)));
+				fillData();
+				return true;
+		}
+		 return false;
 	}
 	
 	/** Called when the activity is first created. */
@@ -72,7 +93,7 @@ public class ManageVehiclesActivity extends ListActivity
          
          this.fillData();
          
-         //create dialog to input the car information.
+         //create dialog to input the car information. start
          dialog = new Dialog(this);
          dialog.setTitle("Add Information");
          dialog.setContentView(R.layout.vehicle_input);
@@ -118,6 +139,8 @@ public class ManageVehiclesActivity extends ListActivity
 			}
 		});
          
+         //create dialog to input the car information. end
+         
         next.setOnClickListener(new View.OnClickListener() 
         {
         	public void onClick(View view) 
@@ -132,19 +155,89 @@ public class ManageVehiclesActivity extends ListActivity
         });
          
         vehicleListView = this.getListView();
+        
+        registerForContextMenu(vehicleListView);
+        
+        /**
+        // Then you can create a listener like so: 
+        vehicleListView.setOnItemLongClickListener( new AdapterView.OnItemLongClickListener()
+        { 
+        	public boolean onItemLongClick(AdapterView<?> av, View v, int pos, long id) 
+        	{ 
+        		onLongListItemClick(v,pos,id); 
+        		return true; 
+        	} 
+	     }); 
+         */
+        
+        /**
+        
         vehicleListView.setClickable(true);
         vehicleListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
  		
+        vehicleListView.setOnLongClickListener(new OnLongClickListener() 
+        { 
+            public boolean onLongClick(View v) 
+            {
+                // TODO Auto-generated method stub
+            	Log.v(TAG, "On Touch event fired");
+ 				System.out.println("On item click event fired");
+ 				
+                return true;
+            }
+        });
+        
  		vehicleListView.setOnTouchListener(new OnTouchListener() 
  		{
  			public boolean onTouch(View v, MotionEvent event) 
  			{
- 				Log.v(TAG, "On Touch event fired");
- 				System.out.println("On item click event fired");
+ 				System.out.println("Long Click");
  				return false;
  			}
  	    });
- 		
+         */
+ 		/**
+ 		vehicleListView.setMultiChoiceModeListener(new MultiChoiceModeListener() 
+ 		{
+ 		    public void onItemCheckedStateChanged(ActionMode mode, int position,long id, boolean checked) 
+ 		    {
+
+ 		    }
+
+ 		    public boolean onActionItemClicked(ActionMode mode, MenuItem item) 
+ 		    {
+ 		        // Respond to clicks on the actions in the CAB
+ 		        switch (item.getItemId()) 
+ 		        {
+ 		            case R.id.menu_delete:
+ 		                //deleteSelectedItems();
+ 		                mode.finish(); // Action picked, so close the CAB
+ 		                return true;
+ 		            default:
+ 		                return false;
+ 		        }
+ 		    }
+
+ 		    public boolean onCreateActionMode(ActionMode mode, Menu menu) 
+ 		    {
+ 		        // Inflate the menu for the CAB
+ 		        MenuInflater inflater = mode.getMenuInflater();
+ 		        inflater.inflate(R.menu.action_bar, menu);
+ 		        return true;
+ 		    }
+
+ 		    public void onDestroyActionMode(ActionMode mode) {
+ 		        // Here you can make any necessary updates to the activity when
+ 		        // the CAB is removed. By default, selected items are deselected/unchecked.
+ 		    }
+
+ 		    public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+ 		        // Here you can perform updates to the CAB due to
+ 		        // an invalidate() request
+ 		        return false;
+ 		    }
+ 		});
+ 		*/
  		
  		/**
  		vehicleListView.setOnItemSelectedListener(new OnItemSelectedListener()
@@ -174,19 +267,27 @@ public class ManageVehiclesActivity extends ListActivity
  			
  		});
  		*/
- 		
+
     }
     
-    public void fillData()
+    protected void onLongListItemClick(View v, int pos, long id) 
     {
-    	String[] from = new String[]{CarListDao.CAR_NAME};
-        int[] to = new int[] { R.id.vehicle_entry};
+		// TODO Auto-generated method stub
+		Log.i(TAG, "asdf "+ pos + " " + id);
+	}
 
-        Cursor c = carListDao.getAll();
+	public void fillData()
+    {
+    	String[] from = new String[]{CarListDao.CAR_ID, CarListDao.CAR_NAME};
+        int[] to = new int[] { R.id.vehicle_entry_name, R.id.vehicle_entry_name};
+
+        c = carListDao.getAll();
         
 		// Use the SimpleCursorAdapter to show the
 		// elements in a ListView
-		adapter = new MySimpleCursorAdapter(this, R.layout.manage_vehicles_entry, c, from, to, 0);
+		adapter = new SimpleCursorAdapter(this, R.layout.manage_vehicles_entry, c, from, to, 0);
+		
+		
 		setListAdapter(adapter);
 		
     }
@@ -202,50 +303,4 @@ public class ManageVehiclesActivity extends ListActivity
         
         fillData();
     }
-    
-    private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() 
-	{
-
-		// Called when the action mode is created; startActionMode() was called
-		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-			// Inflate a menu resource providing context menu items
-			MenuInflater inflater = mode.getMenuInflater();
-			// Assumes that you have "contexual.xml" menu resources
-			inflater.inflate(R.menu.action_bar, menu);
-			return true;
-		}
-
-		// Called each time the action mode is shown. Always called after
-		// onCreateActionMode, but
-		// may be called multiple times if the mode is invalidated.
-		public boolean onPrepareActionMode(ActionMode mode, Menu menu) 
-		{
-			return false; // Return false if nothing is done
-		}
-
-		// Called when the user selects a contextual menu item
-		public boolean onActionItemClicked(ActionMode mode, MenuItem item) 
-		{
-			switch (item.getItemId()) 
-			{
-			default:
-				Toast.makeText(ManageVehiclesActivity.this, "Selected menu", Toast.LENGTH_LONG).show();
-				mode.finish(); // Action picked, so close the CAB
-				return false;
-			}
-		}
-
-		public void onDestroyActionMode(ActionMode mode) {
-			// TODO Auto-generated method stub
-			
-		}
-
-			/**
-		// Called when the user exits the action mode
-		public void onDestroyActionMode(ActionMode mode) {
-			mActionMode = null;
-		}
-		*/
-	};
-    
  }

@@ -19,6 +19,7 @@
         </activity>
         <activity android:label="ManageVehicles" android:name=".ManageVehiclesActivity" android:theme="@android:style/Theme.Holo"></activity>
         <activity android:label="ListTest" android:name=".ListTestActivity"></activity>
+        <activity android:label="ManageLog" android:name=".ManageLogActivity"></activity>
 	<provider
 		android:name=".ContentProvider.CarListContentProvider"
  		android:authorities="org.jay.CarLog.ContentProvider" >

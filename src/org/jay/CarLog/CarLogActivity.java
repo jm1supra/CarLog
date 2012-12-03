@@ -1,10 +1,17 @@
 package org.jay.CarLog;
 
+import org.jay.CarLog.Dao.CarListDao;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.Button;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 
 
 public class CarLogActivity extends Activity 
@@ -26,12 +33,12 @@ public class CarLogActivity extends Activity
             }
         });
         
-        Button next3 = (Button)findViewById(R.id.button3);
-        next3.setOnClickListener(new View.OnClickListener() 
+        Button next2 = (Button)findViewById(R.id.button2);
+        next2.setOnClickListener(new View.OnClickListener() 
         {
             public void onClick(View view) 
             {
-                Intent myIntent = new Intent(view.getContext(), ListTestActivity.class);
+                Intent myIntent = new Intent(view.getContext(), ManageLogActivity.class);
                 startActivityForResult(myIntent, 10);
             }
         });
