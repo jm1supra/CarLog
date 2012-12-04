@@ -67,14 +67,23 @@ public class ManageVehiclesActivity extends ListActivity
 	public boolean onContextItemSelected(MenuItem item) 
 	{
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-		 
+		
+		System.out.println("id deleted is " + info.id);
+		
 		switch (item.getItemId()) 
 		{
 			case R.id.menu_delete:
 				c.moveToPosition(info.position);
-				carListDao.remove(c.getString(c.getColumnIndex(CarListDao.CAR_NAME)));
+				//carListDao.remove(c.getString(c.getColumnIndex(CarListDao.CAR_NAME)));
+				carListDao.remove(info.id);
 				fillData();
 				return true;
+			case R.id.menu_edit:
+				//dialog.setTitle("Edit Information");
+				 
+				//modelName = (TextView)dialog.findViewById(R.id.model);
+				//yearList = (Spinner)dialog.findViewById(R.id.year_list);
+				return false;
 		}
 		 return false;
 	}

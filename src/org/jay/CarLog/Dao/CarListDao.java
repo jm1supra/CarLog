@@ -45,6 +45,11 @@ public class CarListDao
 		database.insert(TABLE_NAME, null, values);
 	}
 	
+	public Cursor getCar(long id)
+	{
+		return database.query(TABLE_NAME, new String[]{"car_id _id", CAR_ID, CAR_YEAR, CAR_NAME}, null, null, null, null, null);
+	}
+	
 	public void editCar(Vehicle vehicle)
 	{
 		ContentValues updateCountry = new ContentValues();
@@ -63,6 +68,11 @@ public class CarListDao
 	public void remove(String name)
 	{
 		database.delete(TABLE_NAME, CAR_NAME + "=?", new String[]{name});
+	}
+	
+	public void remove(long id)
+	{
+		database.delete(TABLE_NAME, CAR_ID + "=?", new String[]{id+""});
 	}
 	
 	public ArrayList<Vehicle> getAllList()
